@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.CameraPreview;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.CameraPreview;
 
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;

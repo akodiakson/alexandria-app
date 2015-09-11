@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.CameraPreview;
 
 /**
  * Common base class for defining graphics for a particular item type.  This along with

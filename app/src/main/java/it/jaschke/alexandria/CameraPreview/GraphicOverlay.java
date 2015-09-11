@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.CameraPreview;
 
 /*
  * Copyright (C) The Android Open Source Project

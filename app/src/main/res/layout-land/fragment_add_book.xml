@@ -20,7 +20,7 @@
 
 
 
-            <it.jaschke.alexandria.CameraSourcePreview
+            <it.jaschke.alexandria.CameraPreview.CameraSourcePreview
                 android:id="@+id/preview"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
@@ -28,12 +28,12 @@
                 android:layout_below="@id/ean"
                 android:visibility="visible">
 
-                <it.jaschke.alexandria.GraphicOverlay
+                <it.jaschke.alexandria.CameraPreview.GraphicOverlay
                     android:id="@+id/faceOverlay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-            </it.jaschke.alexandria.CameraSourcePreview>
+            </it.jaschke.alexandria.CameraPreview.CameraSourcePreview>
 
         <EditText
             android:id="@+id/ean"

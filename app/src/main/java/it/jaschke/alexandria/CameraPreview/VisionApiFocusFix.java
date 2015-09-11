@@ -1,4 +1,4 @@
-package it.jaschke.alexandria;
+package it.jaschke.alexandria.CameraPreview;
 
 import android.hardware.Camera;
 import android.support.annotation.NonNull;

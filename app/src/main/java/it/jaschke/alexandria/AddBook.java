@@ -32,6 +32,9 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
+import it.jaschke.alexandria.CameraPreview.CameraSourcePreview;
+import it.jaschke.alexandria.CameraPreview.GraphicOverlay;
+import it.jaschke.alexandria.CameraPreview.VisionApiFocusFix;
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
