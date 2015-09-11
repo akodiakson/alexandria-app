@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/bookCover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignTop="@+id/authors"
+        android:contentDescription="@string/book_cover"
+        tools:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/bookTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:paddingRight="20dp"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/head_line"
+        android:textStyle="bold"
+        tools:text="Heartbreaking work of staggering genius" />
+
+    <TextView
+        android:id="@+id/bookSubTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bookTitle"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        tools:text="A true story" />
+
+    <TextView
+        android:id="@+id/bookDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        tools:text="A superlong description of a superlong book, spanning many pages, for the greater good" />
+
+    <TextView
+        android:id="@+id/authors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="start"
+        android:textSize="@dimen/small_fontsize"
+        tools:text="Dave Eggers" />
+
+
+    <TextView
+        android:id="@+id/categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bookCover"
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/small_fontsize"
+        tools:text="Fiction" />
+
+</LinearLayout>
