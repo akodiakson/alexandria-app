@@ -161,6 +161,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     private void processBarcodeInput(String eanToCheck) {
 
+        System.out.println("eanToCheck = " + eanToCheck);
         //catch isbn10 numbers
         if (eanToCheck.length() == 10 && !eanToCheck.startsWith("978")) {
             eanToCheck = "978" + eanToCheck;
@@ -169,15 +170,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             clearFields();
             return;
         }
-        //TODO -- do I track the most recent eanToCheck?
-//        if(eanToCheck == null || eanToCheck.isEmpty() || eanToCheck.equals(mCurrentEan)){
-//            return;
-//        }
 
-        System.out.println("processBarcodeInput will call network");
-
-
-//        mCurrentEan = eanToCheck;
         //Once we have an ISBN, start a book intent
         if(NetworkUtility.isNetworkConnected(new WeakReference<Context>(getActivity()))){
             Intent bookIntent = new Intent(getActivity(), BookService.class);
@@ -233,6 +226,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            //This triggers the TextWatcher callback
                             ean.setText(barcode.rawValue);
                         }
                     });
