@@ -1,5 +1,6 @@
 package it.jaschke.alexandria;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -357,6 +358,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         rootView.findViewById(R.id.save_button).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.delete_button).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        //BUG DISCOVERED: The page title wasn't set here like the other fragments
+        activity.setTitle(R.string.scan);
     }
 
     private void hideInputShowResult() {
