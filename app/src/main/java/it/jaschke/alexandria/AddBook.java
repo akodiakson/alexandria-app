@@ -60,6 +60,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private GraphicOverlay mGraphicOverlay;
 //    private String mCurrentEan;
 
+    //Because the barcode detector is always scanning, we don't want to continuously show new
+    //SnackBars each time it detects a frame with a bar code.
+    private boolean mShowNetworkAvailabilitySnackBar = true;
 
     public AddBook(){
     }
@@ -186,9 +189,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 AddBook.this.restartLoader();
             }
         } else {
-            Snackbar
-                    .make(ean, getString(R.string.network_not_available), Snackbar.LENGTH_SHORT)
-                    .show();
+            if(mShowNetworkAvailabilitySnackBar){
+                Snackbar
+                        .make(ean, getString(R.string.network_not_available), Snackbar.LENGTH_LONG)
+                        .show();
+            }
+
+            mShowNetworkAvailabilitySnackBar = false;
         }
 
     }
@@ -264,6 +271,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onResume() {
         super.onResume();
+        mShowNetworkAvailabilitySnackBar = true;
         startCameraSource();
     }
 
