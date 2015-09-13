@@ -48,29 +48,26 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     private final int LOADER_ID = 1;
     private View rootView;
-    private final String EAN_CONTENT="eanContent";
+    private final String EAN_CONTENT = "eanContent";
 
     private static final int RC_HANDLE_GMS = 9001;
 
     private BarcodeDetector mBarcodeDetector;
 
-
     private CameraSource mCameraSource = null;
     private CameraSourcePreview mPreview;
-    private GraphicOverlay mGraphicOverlay;
-//    private String mCurrentEan;
 
     //Because the barcode detector is always scanning, we don't want to continuously show new
     //SnackBars each time it detects a frame with a bar code.
     private boolean mShowNetworkAvailabilitySnackBar = true;
 
-    public AddBook(){
+    public AddBook() {
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(ean!=null) {
+        if (ean != null) {
             outState.putString(EAN_CONTENT, ean.getText().toString());
         }
     }
@@ -122,7 +119,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             @Override
             public void onClick(View view) {
                 Intent bookIntent = new Intent(getActivity(), BookService.class);
-                bookIntent.putExtra(BookService.EAN, ean.getText().toString());//ACE was from editText
+                bookIntent.putExtra(BookService.EAN, ean.getText().toString());
                 bookIntent.setAction(BookService.DELETE_BOOK);
                 getActivity().startService(bookIntent);
                 ean.setText("");
@@ -131,15 +128,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         });
 
         mPreview = (CameraSourcePreview) rootView.findViewById(R.id.preview);
-        mGraphicOverlay = (GraphicOverlay) rootView.findViewById(R.id.faceOverlay);
 
         createCameraSource();
 
-        if(savedInstanceState!=null){
+        if (savedInstanceState != null) {
             ean.setText(savedInstanceState.getString(EAN_CONTENT));
             ean.setHint("");
         }
-
 
 
         return rootView;
@@ -154,7 +149,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mCameraSource != null){
+        if (mCameraSource != null) {
             mCameraSource.release();
         }
     }
@@ -172,17 +167,17 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         }
 
         //Once we have an ISBN, start a book intent
-        if(NetworkUtility.isNetworkConnected(new WeakReference<Context>(getActivity()))){
+        if (NetworkUtility.isNetworkConnected(new WeakReference<Context>(getActivity()))) {
             Intent bookIntent = new Intent(getActivity(), BookService.class);
             bookIntent.putExtra(BookService.EAN, eanToCheck);
             bookIntent.setAction(BookService.FETCH_BOOK);
             getActivity().startService(bookIntent);
             boolean hasRunningLoaders = AddBook.this.getLoaderManager().hasRunningLoaders();
-            if(!hasRunningLoaders){
+            if (!hasRunningLoaders) {
                 AddBook.this.restartLoader();
             }
         } else {
-            if(mShowNetworkAvailabilitySnackBar){
+            if (mShowNetworkAvailabilitySnackBar) {
                 Snackbar
                         .make(ean, getString(R.string.network_not_available), Snackbar.LENGTH_LONG)
                         .show();
@@ -257,7 +252,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     }
 
-    private void focusCamera(){
+    private void focusCamera() {
         VisionApiFocusFix.cameraFocus(mCameraSource, Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
     }
 
@@ -284,7 +279,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         // check that the device has play services available.
         int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
-               getActivity());
+                getActivity());
         if (code != ConnectionResult.SUCCESS) {
             Dialog dlg =
                     GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), code, RC_HANDLE_GMS);
@@ -293,7 +288,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         if (mCameraSource != null) {
             try {
-                mPreview.start(mCameraSource, mGraphicOverlay);
+                mPreview.start(mCameraSource);
             } catch (IOException e) {
                 Log.e(TAG, "Unable to start camera source.", e);
                 mCameraSource.release();
@@ -302,19 +297,15 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         }
     }
 
-    private void restartLoader(){
+    private void restartLoader() {
         getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
     @Override
     public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        System.out.println("AddBook.onCreateLoader");
-//        if(mCurrentEan == null || mCurrentEan.isEmpty()){
-//            return null;
-//        }
-        String eanStr= ean.getText().toString();
-        if(eanStr.length()==10 && !eanStr.startsWith("978")){
-            eanStr="978"+eanStr;
+        String eanStr = ean.getText().toString();
+        if (eanStr.length() == 10 && !eanStr.startsWith("978")) {
+            eanStr = "978" + eanStr;
         }
         return new CursorLoader(
                 getActivity(),
@@ -332,8 +323,6 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             return;
         }
 
-        System.out.println("onLoadFinished");
-
         hideInputShowResult();
 
         String bookTitle = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
@@ -345,9 +334,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         String authors = data.getString(data.getColumnIndex(AlexandriaContract.AuthorEntry.AUTHOR));
         String[] authorsArr = authors.split(",");
         ((TextView) rootView.findViewById(R.id.authors)).setLines(authorsArr.length);
-        ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",","\n"));
+        ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",", "\n"));
         String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
-        if(Patterns.WEB_URL.matcher(imgUrl).matches()){
+        if (Patterns.WEB_URL.matcher(imgUrl).matches()) {
             new DownloadImage((ImageView) rootView.findViewById(R.id.bookCover)).execute(imgUrl);
             rootView.findViewById(R.id.bookCover).setVisibility(View.VISIBLE);
         }
@@ -384,7 +373,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     }
 
-    private void clearFields(){
+    private void clearFields() {
         ((TextView) rootView.findViewById(R.id.bookTitle)).setText("");
         ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText("");
         ((TextView) rootView.findViewById(R.id.bookDescription)).setText("");
@@ -394,6 +383,4 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         rootView.findViewById(R.id.save_button).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.delete_button).setVisibility(View.INVISIBLE);
     }
-
-
 }
