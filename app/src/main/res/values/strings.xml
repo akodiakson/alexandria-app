@@ -31,4 +31,5 @@
     The original version of this app was built by Sascha Jaschke, and a modified version is given to students in the Udacity Android Nanodegree program. </string>
     <string name="title_activity_barcode_scanning">BarcodeScanningActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="network_not_available">Connect to a network to add a book</string>
 </resources>

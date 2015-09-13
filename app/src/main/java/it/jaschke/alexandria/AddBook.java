@@ -31,6 +31,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import it.jaschke.alexandria.CameraPreview.CameraSourcePreview;
 import it.jaschke.alexandria.CameraPreview.GraphicOverlay;
@@ -154,35 +155,41 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         }
     }
 
-    private void processBarcodeInput(String ean) {
+    private void processBarcodeInput(String eanToCheck) {
 
         //catch isbn10 numbers
-        if (ean.length() == 10 && !ean.startsWith("978")) {
-            ean = "978" + ean;
+        if (eanToCheck.length() == 10 && !eanToCheck.startsWith("978")) {
+            eanToCheck = "978" + eanToCheck;
         }
-        if (ean.length() < 13) {
+        if (eanToCheck.length() < 13) {
             clearFields();
             return;
         }
-        //TODO -- do I track the most recent ean?
-//        if(ean == null || ean.isEmpty() || ean.equals(mCurrentEan)){
+        //TODO -- do I track the most recent eanToCheck?
+//        if(eanToCheck == null || eanToCheck.isEmpty() || eanToCheck.equals(mCurrentEan)){
 //            return;
 //        }
 
         System.out.println("processBarcodeInput will call network");
 
 
-//        mCurrentEan = ean;
+//        mCurrentEan = eanToCheck;
         //Once we have an ISBN, start a book intent
-        Intent bookIntent = new Intent(getActivity(), BookService.class);
-        bookIntent.putExtra(BookService.EAN, ean);
-        bookIntent.setAction(BookService.FETCH_BOOK);
-        getActivity().startService(bookIntent);
-        boolean hasRunningLoaders = AddBook.this.getLoaderManager().hasRunningLoaders();
-        if(!hasRunningLoaders){
-            AddBook.this.restartLoader();
-
+        if(NetworkUtility.isNetworkConnected(new WeakReference<Context>(getActivity()))){
+            Intent bookIntent = new Intent(getActivity(), BookService.class);
+            bookIntent.putExtra(BookService.EAN, eanToCheck);
+            bookIntent.setAction(BookService.FETCH_BOOK);
+            getActivity().startService(bookIntent);
+            boolean hasRunningLoaders = AddBook.this.getLoaderManager().hasRunningLoaders();
+            if(!hasRunningLoaders){
+                AddBook.this.restartLoader();
+            }
+        } else {
+            Snackbar
+                    .make(ean, getString(R.string.network_not_available), Snackbar.LENGTH_SHORT)
+                    .show();
         }
+
     }
 
     /**
