@@ -37,4 +37,5 @@
     <string name="book_added">Book added to collection</string>
     <string name="book_detail">Book Detail</string>
     <string name="book_service_url" translatable="false">https://www.googleapis.com/books/v1/volumes?</string>
+    <string name="search_hint">Search your books by title</string>
 </resources>

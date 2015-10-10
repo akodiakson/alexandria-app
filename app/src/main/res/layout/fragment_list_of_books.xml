@@ -32,7 +32,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:focusable="false"
+            android:focusable="true"
             android:layout_toLeftOf="@+id/searchButton"
             android:layout_toStartOf="@+id/searchButton"
             android:inputType="text"
