@@ -32,4 +32,10 @@
     <string name="title_activity_barcode_scanning">BarcodeScanningActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="network_not_available">Connect to a network to add a book</string>
+    <string name="stack_overflow_link">http://stackoverflow.com/questions/32099530/google-vision-barcode-library-not-found</string>
+    <string name="learn_more">Learn more</string>
+    <string name="barcode_libraries_snackbar_text">Additional barcode libraries will be installed</string>
+    <string name="isbn_prefix">978</string>
+    <string name="book_added">Book added to collection</string>
+    <string name="book_detail">Book Detail</string>
 </resources>

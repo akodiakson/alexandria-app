@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -109,7 +110,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 ean.setText("");
                 showInputHideResult();
                 Snackbar
-                        .make(rootView, "Book added to collection", Snackbar.LENGTH_SHORT)
+                        .make(rootView, getString(R.string.book_added), Snackbar.LENGTH_SHORT)
                         .show();
 
             }
@@ -122,7 +123,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 bookIntent.putExtra(BookService.EAN, ean.getText().toString());
                 bookIntent.setAction(BookService.DELETE_BOOK);
                 getActivity().startService(bookIntent);
-                ean.setText("");
+                ean.setText(null);
                 showInputHideResult();
             }
         });
@@ -133,7 +134,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
         if (savedInstanceState != null) {
             ean.setText(savedInstanceState.getString(EAN_CONTENT));
-            ean.setHint("");
+            ean.setHint(null);
         }
 
 
@@ -156,10 +157,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     private void processBarcodeInput(String eanToCheck) {
 
-        System.out.println("eanToCheck = " + eanToCheck);
         //catch isbn10 numbers
-        if (eanToCheck.length() == 10 && !eanToCheck.startsWith("978")) {
-            eanToCheck = "978" + eanToCheck;
+        if (eanToCheck.length() == 10 && !eanToCheck.startsWith(getString(R.string.isbn_prefix))) {
+            eanToCheck = getString(R.string.isbn_prefix) + eanToCheck;
         }
         if (eanToCheck.length() < 13) {
             clearFields();
@@ -240,6 +240,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             // available.  The detectors will automatically become operational once the library
             // downloads complete on device.
             Log.w(TAG, "Detector dependencies are not yet available.");
+            Snackbar snackbar = Snackbar.make(rootView, getString(R.string.barcode_libraries_snackbar_text), Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction(getString(R.string.learn_more), getBarcodeLibrariesLearnMoreTappedListener());
+            snackbar.show();
         }
 
         // Creates and starts the camera.  Note that this uses a higher resolution in comparison
@@ -250,6 +253,22 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 .setRequestedPreviewSize(CameraSourcePreview.PREVIEW_FRAME_DIMENSION, CameraSourcePreview.PREVIEW_FRAME_DIMENSION)
                 .build();
 
+    }
+
+    private View.OnClickListener getBarcodeLibrariesLearnMoreTappedListener() {
+        return new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                String stackOverflowBarcodeLibraryRationaleLink = getString(R.string.stack_overflow_link);
+                Uri uri = Uri.parse(stackOverflowBarcodeLibraryRationaleLink);
+
+                Intent openLinkIntent = new Intent(Intent.ACTION_VIEW);
+                openLinkIntent.setData(uri);
+                if(openLinkIntent.resolveActivity(getActivity().getPackageManager()) != null){
+                    startActivity(openLinkIntent);
+                }
+            }
+        };
     }
 
     private void focusCamera() {
@@ -304,8 +323,9 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     @Override
     public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String eanStr = ean.getText().toString();
-        if (eanStr.length() == 10 && !eanStr.startsWith("978")) {
-            eanStr = "978" + eanStr;
+        String isbnPrefix = getString(R.string.isbn_prefix);
+        if (eanStr.length() == 10 && !eanStr.startsWith(isbnPrefix)) {
+            eanStr = isbnPrefix + eanStr;
         }
         return new CursorLoader(
                 getActivity(),
@@ -374,11 +394,11 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     }
 
     private void clearFields() {
-        ((TextView) rootView.findViewById(R.id.bookTitle)).setText("");
-        ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText("");
-        ((TextView) rootView.findViewById(R.id.bookDescription)).setText("");
-        ((TextView) rootView.findViewById(R.id.authors)).setText("");
-        ((TextView) rootView.findViewById(R.id.categories)).setText("");
+        ((TextView) rootView.findViewById(R.id.bookTitle)).setText(null);
+        ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText(null);
+        ((TextView) rootView.findViewById(R.id.bookDescription)).setText(null);
+        ((TextView) rootView.findViewById(R.id.authors)).setText(null);
+        ((TextView) rootView.findViewById(R.id.categories)).setText(null);
         rootView.findViewById(R.id.bookCover).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.save_button).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.delete_button).setVisibility(View.INVISIBLE);
