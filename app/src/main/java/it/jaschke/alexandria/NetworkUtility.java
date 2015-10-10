@@ -11,6 +11,6 @@ public class NetworkUtility {
         Context context = weakReference.get();
         ConnectivityManager systemService = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = systemService.getActiveNetworkInfo();
-        return activeNetworkInfo.isConnected();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
