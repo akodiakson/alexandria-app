@@ -96,7 +96,7 @@ public class BookService extends IntentService {
         String bookJsonString = null;
 
         try {
-            final String FORECAST_BASE_URL = "https://www.googleapis.com/books/v1/volumes?";
+            final String FORECAST_BASE_URL = getString(R.string.book_service_url);
             final String QUERY_PARAM = "q";
 
             final String ISBN_PARAM = "isbn:" + ean;

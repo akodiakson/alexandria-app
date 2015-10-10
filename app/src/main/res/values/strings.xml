@@ -26,16 +26,15 @@
     <string name="back_button">go back</string>
     <string name="share_text">A must read book: </string>
 
-<!-- TODO: Remove or change this placeholder text -->
     <string name="about_text">This application gets book information from a Google API. All titles, cover images, and author information come from there.
     The original version of this app was built by Sascha Jaschke, and a modified version is given to students in the Udacity Android Nanodegree program. </string>
     <string name="title_activity_barcode_scanning">BarcodeScanningActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="network_not_available">Connect to a network to add a book</string>
-    <string name="stack_overflow_link">http://stackoverflow.com/questions/32099530/google-vision-barcode-library-not-found</string>
+    <string name="stack_overflow_link" translatable="false">http://stackoverflow.com/questions/32099530/google-vision-barcode-library-not-found</string>
     <string name="learn_more">Learn more</string>
     <string name="barcode_libraries_snackbar_text">Additional barcode libraries will be installed</string>
-    <string name="isbn_prefix">978</string>
+    <string name="isbn_prefix" translatable="false">978</string>
     <string name="book_added">Book added to collection</string>
     <string name="book_detail">Book Detail</string>
+    <string name="book_service_url" translatable="false">https://www.googleapis.com/books/v1/volumes?</string>
 </resources>
