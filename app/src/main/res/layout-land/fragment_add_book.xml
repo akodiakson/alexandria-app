@@ -49,7 +49,7 @@
             android:minEms="@integer/ean_width"
             android:padding="16dp"
             android:saveEnabled="true"
-            tools:text="9780137903955" />
+            tools:text="@string/isbn_prefix" />
 
 
         <!--</LinearLayout>-->
@@ -102,7 +102,7 @@
                 android:textIsSelectable="true"
                 android:textSize="@dimen/head_line"
                 android:textStyle="bold"
-                tools:text="Some book title" />
+                tools:text="@string/app_name" />
 
             <TextView
                 android:id="@+id/bookSubTitle"
@@ -112,7 +112,7 @@
                 android:layout_alignStart="@+id/bookTitle"
                 android:layout_below="@+id/bookTitle"
                 android:layout_marginTop="10dp"
-                tools:text="Some book subtitle" />
+                tools:text="@string/app_name" />
 
             <TextView
                 android:id="@+id/authors"
@@ -120,15 +120,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/bookCover"
                 android:textSize="@dimen/small_fontsize"
-                tools:text="Some authors" />
+                tools:text="@string/app_name" />
 
             <TextView
                 android:id="@+id/bookDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:ellipsize="end"
-                tools:text="A superlong description of a superlong book, spanning many pages, for the greater good" />
+                android:ellipsize="end" />
 
 
             <TextView
@@ -140,8 +139,7 @@
 
                 android:layout_below="@+id/bookCover"
                 android:layout_marginTop="10dp"
-                android:textSize="@dimen/small_fontsize"
-                tools:text="Some book categories" />
+                android:textSize="@dimen/small_fontsize" />
 
         </LinearLayout>
 

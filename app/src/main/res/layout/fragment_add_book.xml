@@ -31,7 +31,7 @@
                 android:minEms="@integer/ean_width"
                 android:padding="16dp"
                 android:saveEnabled="true"
-                tools:text="9780137903955" />
+                tools:text="@string/isbn_prefix" />
 
             <it.jaschke.alexandria.CameraPreview.CameraSourcePreview
                 android:id="@+id/preview"

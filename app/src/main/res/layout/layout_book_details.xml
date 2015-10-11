@@ -24,8 +24,7 @@
         android:paddingRight="20dp"
         android:textIsSelectable="true"
         android:textSize="@dimen/head_line"
-        android:textStyle="bold"
-        tools:text="Heartbreaking work of staggering genius" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/bookSubTitle"
@@ -34,16 +33,14 @@
         android:layout_below="@+id/bookTitle"
         android:layout_marginTop="10dp"
         android:ellipsize="end"
-        android:maxLines="3"
-        tools:text="A true story" />
+        android:maxLines="3" />
 
     <TextView
         android:id="@+id/bookDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:ellipsize="end"
-        tools:text="A superlong description of a superlong book, spanning many pages, for the greater good" />
+        android:ellipsize="end" />
 
     <TextView
         android:id="@+id/authors"
@@ -51,8 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="start"
-        android:textSize="@dimen/small_fontsize"
-        tools:text="Dave Eggers" />
+        android:textSize="@dimen/small_fontsize"/>
 
 
     <TextView
@@ -61,7 +57,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/bookCover"
         android:layout_marginTop="20dp"
-        android:textSize="@dimen/small_fontsize"
-        tools:text="Fiction" />
+        android:textSize="@dimen/small_fontsize" />
 
 </LinearLayout>
