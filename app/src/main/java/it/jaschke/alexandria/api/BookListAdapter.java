@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.graphics.Palette;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,20 +51,23 @@ public class BookListAdapter extends CursorAdapter {
 
         String imgUrl = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
 
+        final ImageView bookCover = viewHolder.bookCover;
         Callback callback = new Callback.EmptyCallback() {
             @Override
             public void onSuccess() {
                 super.onSuccess();
                 //Source: http://jakewharton.com/coercing-picasso-to-play-with-palette/
-                Bitmap bitmap = ((BitmapDrawable) viewHolder.bookCover.getDrawable()).getBitmap(); // Ew!
+                Bitmap bitmap = ((BitmapDrawable) bookCover.getDrawable()).getBitmap(); // Ew!
                 Palette palette = Palette.from(bitmap).generate();
                 viewHolder.bookTitle.setTextColor(palette.getDarkVibrantColor(context.getResources().getColor(R.color.colorBlack)));
             }
         };
 
-        Picasso.with(context)
-                .load(imgUrl)
-                .into(viewHolder.bookCover, callback);
+        if(imgUrl != null && !imgUrl.trim().isEmpty() && Patterns.WEB_URL.matcher(imgUrl).matches()){
+            Picasso.with(context)
+                    .load(imgUrl)
+                    .into(bookCover, callback);
+        }
 
         String bookTitle = cursor.getString(cursor.getColumnIndex(AlexandriaContract.BookEntry.TITLE));
         viewHolder.bookTitle.setText(bookTitle);
