@@ -144,7 +144,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         int id = R.id.container;
         if(findViewById(R.id.right_container) != null){
             id = R.id.right_container;
+            if(MainActivity.IS_TABLET && findViewById(R.id.right_container)==null){
+               getSupportFragmentManager().popBackStack();
+            }
         }
+
         getSupportFragmentManager().beginTransaction()
                 .replace(id, fragment)
                 .addToBackStack(getString(R.string.book_detail))
